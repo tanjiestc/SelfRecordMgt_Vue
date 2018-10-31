@@ -1,5 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+// import Cookies from 'js-cookie'
 
 const user = {
   state: {
@@ -30,11 +31,14 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
+          console.log('success')
           const data = response.data
+          // 将token设置到浏览器Cookies
           setToken(data.token)
           commit('SET_TOKEN', data.token)
           resolve()
         }).catch(error => {
+          console.log('error')
           reject(error)
         })
       })
