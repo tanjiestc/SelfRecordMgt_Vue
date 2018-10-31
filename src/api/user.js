@@ -10,3 +10,21 @@ export function addUser(username, password) {
     }
   })
 }
+
+export function list() {
+  return request({
+    url: 'user',
+    method: 'get'
+  })
+}
+
+export function changeEnable(username, enable) {
+  return request({
+    url: 'user',
+    method: 'put',
+    data: {
+      username,
+      enable
+    }
+  })
+}

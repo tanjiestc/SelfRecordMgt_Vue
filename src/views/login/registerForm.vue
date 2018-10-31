@@ -2,7 +2,7 @@
   <div>
     <el-form ref="ruleForm2" :model="ruleForm2" :rules="rules2" status-icon label-width="100px" class="demo-ruleForm">
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm2.username"/>
+        <el-input v-model="ruleForm2.username" @keyup.enter="handleEsc" />
       </el-form-item>
       <el-form-item label="密码" prop="pass">
         <el-input v-model="ruleForm2.pass" type="password" />
@@ -23,6 +23,14 @@ import { addUser } from '@/api/user'
 export default {
   name: 'RegisterForm',
   data() {
+    const validateUserName = (rule, value, callback) => {
+      if (!/^[a-zA-Z0-9]+$/.test(value)) {
+        callback(new Error('用户名由大小写字母和数字组成'))
+      } else {
+        callback()
+      }
+    }
+
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
@@ -50,10 +58,16 @@ export default {
       },
       rules2: {
         pass: [
+          { type: 'string', min: 6, max: 12, message: '密码的长度在6至12之间' },
           { validator: validatePass, trigger: 'blur' }
         ],
         checkPass: [
+          { type: 'string', min: 6, max: 12, message: '密码的长度在6至12之间' },
           { validator: validatePass2, trigger: 'blur' }
+        ],
+        username: [
+          { type: 'string', min: 6, max: 12, message: '用户名的长度在6至12之间' },
+          { validator: validateUserName, trigger: 'change' }
         ]
       }
     }
@@ -94,6 +108,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    handleEsc() {
+      console.log('sss')
     }
   }
 }

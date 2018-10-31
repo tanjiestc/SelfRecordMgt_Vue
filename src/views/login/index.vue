@@ -12,7 +12,7 @@
         <span class="svg-container">
           <svg-icon icon-class="user"/>
         </span>
-        <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="username"/>
+        <el-input v-model="loginForm.username" name="username" autofocus="true" type="text" auto-complete="on" placeholder="用户名"/>
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -23,7 +23,7 @@
           v-model="loginForm.password"
           name="password"
           auto-complete="on"
-          placeholder="password"
+          placeholder="密码"
           @keyup.enter.native="handleLogin"/>
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye"/>
@@ -76,11 +76,11 @@ export default {
     return {
       showDialog: false,
       loginForm: {
-        username: 'tanjie',
-        password: '123456'
+        username: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur' }],
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
